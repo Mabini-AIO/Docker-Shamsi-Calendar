@@ -15,7 +15,6 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 * **Native Persian Dates:** Accurate Shamsi date calculations and leap year support.
 * **Custom Event Management:** Add your own custom events directly to the calendar. Custom events are highlighted in **Green**, while Fridays and national holidays are marked in **Red**.
 * **Native Mobile Sync (ICS):** Subscribe to your calendar feed directly from your iPhone (Apple Calendar) or any other standard calendar app.
-* **Automated holiday synchronization:** Fetches official events from time.ir during application startup when the current year's events are not already present.
 * **Built-in `HtmlAgilityPack`** scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
 * **Persistent Storage:** Utilizes SQLite with Docker volume mapping to ensure your custom events are never lost between server restarts.
 * **Responsive Design:** A custom CSS grid layout that looks perfect on desktop monitors, tablets, and mobile devices.
