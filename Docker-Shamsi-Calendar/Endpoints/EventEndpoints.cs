@@ -29,14 +29,18 @@ namespace Docker_Shamsi_Calendar.Endpoints
             app.MapGet("/calendar.ics", (DatabaseService db) =>
             {
                 var sb = new StringBuilder();
-                sb.AppendLine("BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//ShamsiServer//Calendar//FA\nCALSCALE:GREGORIAN\nX-WR-CALNAME:Shamsi Events\nREFRESH-INTERVAL;VALUE=DURATION:PT15M\nX-PUBLISHED-TTL:PT15M");
+
+                sb.Append("BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//ShamsiServer//Calendar//FA\r\nCALSCALE:GREGORIAN\r\nX-WR-CALNAME:Shamsi Events\r\nREFRESH-INTERVAL;VALUE=DURATION:PT15M\r\nX-PUBLISHED-TTL:PT15M\r\n");
+
                 foreach (var evt in db.GetEventsForIcs())
                 {
-                    sb.AppendLine($"BEGIN:VEVENT\nUID:event-{evt.Id}@shamsi.local\nDTSTAMP:{DateTime.UtcNow:yyyyMMddTHHmmssZ}");
-                    sb.AppendLine($"DTSTART;VALUE=DATE:{evt.GregorianDate:yyyyMMdd}\nDTEND;VALUE=DATE:{evt.GregorianDate.AddDays(1):yyyyMMdd}");
-                    sb.AppendLine($"SUMMARY:{evt.Title}\nTRANSP:TRANSPARENT\nEND:VEVENT");
+                    sb.Append($"BEGIN:VEVENT\r\nUID:event-{evt.Id}@shamsi.local\r\nDTSTAMP:{DateTime.UtcNow:yyyyMMddTHHmmssZ}\r\n");
+                    sb.Append($"DTSTART;VALUE=DATE:{evt.GregorianDate:yyyyMMdd}\r\nDTEND;VALUE=DATE:{evt.GregorianDate.AddDays(1):yyyyMMdd}\r\n");
+                    sb.Append($"SUMMARY:{evt.Title}\r\nTRANSP:TRANSPARENT\r\nEND:VEVENT\r\n");
                 }
-                sb.AppendLine("END:VCALENDAR");
+
+                sb.Append("END:VCALENDAR\r\n");
+
                 return Results.Text(sb.ToString(), "text/calendar; charset=utf-8");
             });
         }
