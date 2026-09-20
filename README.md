@@ -1,4 +1,4 @@
-# 📅 Docker Shamsi Calendar
+#  Docker Shamsi Calendar
 
 A fast, lightweight, and modern Persian (Shamsi) Calendar application built with **ASP.NET Core Minimal APIs** and **Vanilla JavaScript**. Designed for easy deployment, this application features a sleek UI, custom event tracking, and an automated background scraper to fetch national holidays.
 
@@ -8,16 +8,16 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 
 ---
 
-## ✨ Features
+##  Features
 
-* **🌍 Native Persian Dates:** Accurate Shamsi date calculations and leap year support.
-* **🎨 Custom Event Management:** Add your own custom events directly to the calendar. Custom events are highlighted in **Green**, while Fridays and national holidays are marked in **Red**.
-* **🔄 Automated Holiday Scraper:** Built-in `HtmlAgilityPack` scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
-* **💾 Persistent Storage:** Utilizes SQLite with Docker volume mapping to ensure your custom events are never lost between server restarts.
-* **📱 Responsive Design:** A custom CSS grid layout that looks perfect on desktop monitors, tablets, and mobile devices.
-* **🐳 Docker Native:** Pre-configured `Dockerfile` and `compose.yml` for instant zero-config deployments on any Linux VPS or server management panel (like Dockhand).
+* ** Native Persian Dates:** Accurate Shamsi date calculations and leap year support.
+* ** Custom Event Management:** Add your own custom events directly to the calendar. Custom events are highlighted in **Green**, while Fridays and national holidays are marked in **Red**.
+* ** Automated Holiday Scraper:** Built-in `HtmlAgilityPack` scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
+* ** Persistent Storage:** Utilizes SQLite with Docker volume mapping to ensure your custom events are never lost between server restarts.
+* ** Responsive Design:** A custom CSS grid layout that looks perfect on desktop monitors, tablets, and mobile devices.
+* ** Docker Native:** Pre-configured `Dockerfile` and `compose.yml` for instant zero-config deployments on any Linux VPS or server management panel (like Dockhand).
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 **Backend:**
 * C# / .NET 10.0
@@ -32,7 +32,7 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 * [Docker Desktop](https://www.docker.com/products/docker-desktop) (for local testing) or a Docker-enabled server.
@@ -66,7 +66,7 @@ This project is configured to run on port 8574 out of the box.
 
     Access your calendar at http://YOUR_SERVER_IP:8574.
 
-📂 Project Structure
+ Project Structure
 
     /wwwroot/ - Contains all frontend assets (index.html, /css/style.css, /js/app.js, /fonts/).
 
@@ -80,6 +80,3 @@ This project is configured to run on port 8574 out of the box.
 
     compose.yml - Docker stack configuration including volume mapping for the SQLite database.
 
-🤝 Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
