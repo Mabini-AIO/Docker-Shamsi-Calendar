@@ -2,23 +2,23 @@
   "profiles": {
     "http": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
+      "applicationUrl": "http://localhost:8574",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5029"
+      }
     },
-    "Container (Dockerfile)": {
+    "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
-        "ASPNETCORE_HTTP_PORTS": "8080"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HTTP_PORTS": "8574"
       },
-      "publishAllPorts": true,
+      "httpPort": 8574,
       "useSSL": false
     }
-  },
-  "$schema": "https://json.schemastore.org/launchsettings.json"
+  }
 }
