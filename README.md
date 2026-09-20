@@ -104,58 +104,7 @@ This project is configured to run on port 8574 out of the box.
     Access your calendar at http://YOUR_SERVER_IP:8574.
 
  Architecture
-Code snippet
-
-classDiagram
-    %% Database Context
-    class AppDbContext {
-        +DbSet~Event~ Events
-        +OnConfiguring(DbContextOptionsBuilder)
-    }
-
-    %% Data Model
-    class Event {
-        +int Id
-        +string Title
-        +int Year
-        +int Month
-        +int Day
-        +bool IsHoliday
-        +bool IsCustom
-    }
-
-    %% Background Worker
-    class TimeIrScraperService {
-        -AppDbContext _db
-        +ExecuteAsync(CancellationToken)
-        -ScrapeMonthData(int year, int month)
-        -GetMonthNumber(string monthName)
-    }
-
-    %% API Endpoints (Program.cs)
-    class MinimalApiEndpoints {
-        +GET /api/events?year=y&month=m
-        +POST /api/events
-        +DELETE /api/events/id
-        +GET /calendar.ics
-    }
-
-    %% Frontend App
-    class FrontendApp {
-        +app.js
-        +initializeSetup()
-        +render()
-        +submitEvent()
-        +openModal()
-        -fetch()
-    }
-
-    %% Relationships
-    AppDbContext "1" *-- "*" Event : manages
-    TimeIrScraperService --> AppDbContext : writes fetched holidays
-    MinimalApiEndpoints --> AppDbContext : reads/writes user events
-    FrontendApp --> MinimalApiEndpoints : HTTP REST (JSON)
-
+![uml](Docker-Shamsi-Calendar/assets/uml.png)
  Project Structure
 
     /wwwroot/ - Contains all frontend assets (index.html, /css/style.css, /js/app.js, /fonts/).
