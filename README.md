@@ -42,7 +42,8 @@ You can view all your custom events and holidays directly inside your native App
 ##  Application Previews
 
 ### Phone View
-![Phone](Docker-Shamsi-Calendar/assets/phone.PNG)
+
+<img src="./Docker-Shamsi-Calendar/assets/phone.PNG" alt="Phone" width="50%" />
 
 ### Viewing Events
 ![Event Popup](Docker-Shamsi-Calendar/assets/popup.png)
