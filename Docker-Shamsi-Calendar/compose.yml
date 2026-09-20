@@ -1,0 +1,16 @@
+﻿services:
+  shamsi-calendar:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: shamsi_calendar_app
+    ports:
+      - "8574:8574"
+    volumes:
+      - shamsi_data:/app/data
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+volumes:
+  shamsi_data:

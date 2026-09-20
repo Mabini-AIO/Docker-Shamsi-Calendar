@@ -1,0 +1,12 @@
+﻿# Development folders
+bin/
+obj/
+.vs/
+
+# Database files (prevents overwriting your production database)
+*.db
+*.sqlite
+calendar.db
+
+# Docker
+.dockerignore
