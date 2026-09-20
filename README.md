@@ -6,6 +6,8 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 ![.NET](https://img.shields.io/badge/.NET-10.0-purple.svg)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)
 
+![Main Calendar View](assets/main.png)
+
 ---
 
 ##  Features
@@ -16,6 +18,19 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 * ** Persistent Storage:** Utilizes SQLite with Docker volume mapping to ensure your custom events are never lost between server restarts.
 * ** Responsive Design:** A custom CSS grid layout that looks perfect on desktop monitors, tablets, and mobile devices.
 * ** Docker Native:** Pre-configured `Dockerfile` and `compose.yml` for instant zero-config deployments on any Linux VPS or server management panel (like Dockhand).
+
+###  Application Previews
+
+**Viewing Events:**
+![Event Popup](assets/popup.png)
+
+**Adding Custom Events:**
+![Adding an Event](assets/add.png)
+
+**Event Highlights:**
+![Event Highlights](assets/event.png)
+
+---
 
 ##  Tech Stack
 
