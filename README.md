@@ -14,10 +14,27 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 
 * **Native Persian Dates:** Accurate Shamsi date calculations and leap year support.
 * **Custom Event Management:** Add your own custom events directly to the calendar. Custom events are highlighted in **Green**, while Fridays and national holidays are marked in **Red**.
+* **Native Mobile Sync (ICS):** Subscribe to your calendar feed directly from your iPhone (Apple Calendar) or any other standard calendar app.
 * **Automated Holiday Scraper:** Built-in `HtmlAgilityPack` scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
 * **Persistent Storage:** Utilizes SQLite with Docker volume mapping to ensure your custom events are never lost between server restarts.
 * **Responsive Design:** A custom CSS grid layout that looks perfect on desktop monitors, tablets, and mobile devices.
 * **Docker Native:** Pre-configured `Dockerfile` and `compose.yml` for instant zero-config deployments on any Linux VPS or server management panel (like Dockhand).
+
+---
+
+##  Syncing with Your Phone
+
+You can view all your custom events and holidays directly inside your native Apple Calendar or Google Calendar app. The server generates a live `.ics` feed that updates automatically.
+
+**For iPhone (Apple Calendar):**
+1. Open your iPhone **Settings**.
+2. Tap **Calendar** > **Accounts** > **Add Account**.
+3. Tap **Other**, then select **Add Subscribed Calendar**.
+4. In the Server box, enter your live server URL: 
+   `http://YOUR_SERVER_IP:8574/calendar.ics`
+5. Tap **Next** and **Save**. 
+
+*(Note: If prompted about SSL, tap **Yes** to continue without SSL).*
 
 ---
 
@@ -34,6 +51,7 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 
 ### Event Highlights
 ![Event Highlights](Docker-Shamsi-Calendar/assets/event.png)
+
 ---
 
 ##  Tech Stack
@@ -85,6 +103,59 @@ This project is configured to run on port 8574 out of the box.
 
     Access your calendar at http://YOUR_SERVER_IP:8574.
 
+ Architecture
+Code snippet
+
+classDiagram
+    %% Database Context
+    class AppDbContext {
+        +DbSet~Event~ Events
+        +OnConfiguring(DbContextOptionsBuilder)
+    }
+
+    %% Data Model
+    class Event {
+        +int Id
+        +string Title
+        +int Year
+        +int Month
+        +int Day
+        +bool IsHoliday
+        +bool IsCustom
+    }
+
+    %% Background Worker
+    class TimeIrScraperService {
+        -AppDbContext _db
+        +ExecuteAsync(CancellationToken)
+        -ScrapeMonthData(int year, int month)
+        -GetMonthNumber(string monthName)
+    }
+
+    %% API Endpoints (Program.cs)
+    class MinimalApiEndpoints {
+        +GET /api/events?year=y&month=m
+        +POST /api/events
+        +DELETE /api/events/id
+        +GET /calendar.ics
+    }
+
+    %% Frontend App
+    class FrontendApp {
+        +app.js
+        +initializeSetup()
+        +render()
+        +submitEvent()
+        +openModal()
+        -fetch()
+    }
+
+    %% Relationships
+    AppDbContext "1" *-- "*" Event : manages
+    TimeIrScraperService --> AppDbContext : writes fetched holidays
+    MinimalApiEndpoints --> AppDbContext : reads/writes user events
+    FrontendApp --> MinimalApiEndpoints : HTTP REST (JSON)
+
  Project Structure
 
     /wwwroot/ - Contains all frontend assets (index.html, /css/style.css, /js/app.js, /fonts/).
@@ -93,9 +164,10 @@ This project is configured to run on port 8574 out of the box.
 
     /Services/ - Background workers and the time.ir scraper logic.
 
-    Program.cs - Minimal API endpoints and database configuration.
+    /Endpoints/ - Clean routing definitions for REST logic and ICS feeds.
+
+    Program.cs - Core web application builder and service registration.
 
     Dockerfile - Multi-stage build instructions for compiling the .NET app.
 
     compose.yml - Docker stack configuration including volume mapping for the SQLite database.
-
