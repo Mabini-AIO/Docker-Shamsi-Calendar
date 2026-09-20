@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گاه‌شمار هجری شمسی</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div id="liveTime">...</div>
+        <div class="header">
+            <button class="nav-btn" onclick="prevMonth()">ماه قبل</button>
+            <div class="selectors">
+                <select id="monthSelect" onchange="handleSelectorChange()"></select>
+                <input type="number" id="yearInput" onchange="handleSelectorChange()" min="1300" max="1500" />
+                <button class="nav-btn today-btn" onclick="goToToday()">امروز</button>
+            </div>
+            <button class="nav-btn" onclick="nextMonth()">ماه بعد</button>
+        </div>
+        <div class="grid" id="calendarGrid"></div>
+    </div>
+
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">رویدادها</h3>
+            <ul id="eventList" class="event-list"></ul>
+            <hr>
+            <input type="text" id="eventInput" placeholder="عنوان رویداد جدید..." />
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal()">بستن</button>
+                <button class="btn-primary" onclick="submitEvent()">افزودن</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
