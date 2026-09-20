@@ -15,7 +15,8 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 * **Native Persian Dates:** Accurate Shamsi date calculations and leap year support.
 * **Custom Event Management:** Add your own custom events directly to the calendar. Custom events are highlighted in **Green**, while Fridays and national holidays are marked in **Red**.
 * **Native Mobile Sync (ICS):** Subscribe to your calendar feed directly from your iPhone (Apple Calendar) or any other standard calendar app.
-* **Automated Holiday Scraper:** Built-in `HtmlAgilityPack` scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
+* **Automated holiday synchronization: Fetches official events from time.ir during application startup when the current year's events are not already present.
+* ** Built-in `HtmlAgilityPack` scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
 * **Persistent Storage:** Utilizes SQLite with Docker volume mapping to ensure your custom events are never lost between server restarts.
 * **Responsive Design:** A custom CSS grid layout that looks perfect on desktop monitors, tablets, and mobile devices.
 * **Docker Native:** Pre-configured `Dockerfile` and `compose.yml` for instant zero-config deployments on any Linux VPS or server management panel (like Dockhand).
@@ -59,7 +60,7 @@ You can view all your custom events and holidays directly inside your native App
 **Backend:**
 * C# / .NET 10.0
 * ASP.NET Core Minimal APIs
-* Entity Framework Core (SQLite)
+* SQLite via Microsoft.Data.Sqlite
 * HtmlAgilityPack (Web Scraping)
 
 **Frontend:**
@@ -78,7 +79,7 @@ You can view all your custom events and holidays directly inside your native App
 ### Local Development (Visual Studio)
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/YourUsername/Docker-Shamsi-Calendar.git](https://github.com/YourUsername/Docker-Shamsi-Calendar.git)
+   git clone [https://github.com/Mabini-AIO/Docker-Shamsi-Calendar.git](https://github.com/Mabini-AIO/Docker-Shamsi-Calendar.git)
 
     Open Docker-Shamsi-Calendar.sln in Visual Studio.
 
