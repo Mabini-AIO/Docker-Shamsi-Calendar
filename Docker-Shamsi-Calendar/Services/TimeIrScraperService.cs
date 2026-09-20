@@ -52,7 +52,7 @@ namespace Docker_Shamsi_Calendar.Services
 
                             string dateText = Regex.Replace(WebUtility.HtmlDecode(dateNode.InnerText), @"\s+", " ").Trim();
                             string title = Regex.Replace(WebUtility.HtmlDecode(eventNode.InnerText), @"\s+", " ").Trim();
-                            var match = Regex.Match(dateText, @"([۰-۹0-9]{1,2})\s*(فروردین|اردیبهشت|خرداد|تیر|مرداد|شهریور|مهر|آبان|آذر|دی|بهمن|اسفند)");
+                            var match = Regex.Match(dateText, @"([۰-۹0-9]{1,2})\s*(فروردین|اردیبهشت|خرداد|تیر|اَمرداد|مرداد|شهریور|مهر|آبان|آذر|دی|بهمن|اسفند)");
 
                             if (match.Success)
                             {
@@ -84,6 +84,10 @@ namespace Docker_Shamsi_Calendar.Services
             return input;
         }
 
-        private static int GetMonthNumber(string m) => new List<string> { "", "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند" }.IndexOf(m);
+        private static int GetMonthNumber(string m)
+        {
+            if (m == "اَمرداد") return 5;
+            return new List<string> { "", "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند" }.IndexOf(m);
+        }
     }
 }
