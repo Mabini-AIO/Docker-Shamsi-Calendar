@@ -24,7 +24,7 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 ##  Application Previews
 
 ### Phone View
-![Phone](Docker-Shamsi-Calendar/assets/phone.png)
+![Phone](Docker-Shamsi-Calendar/assets/phone.PNG)
 
 ### Viewing Events
 ![Event Popup](Docker-Shamsi-Calendar/assets/popup.png)
