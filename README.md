@@ -6,16 +6,32 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 ![.NET](https://img.shields.io/badge/.NET-10.0-purple.svg)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)
 
+![Main Calendar View](Docker-Shamsi-Calendar/assets/main.png)
+
 ---
 
 ##  Features
 
-* ** Native Persian Dates:** Accurate Shamsi date calculations and leap year support.
-* ** Custom Event Management:** Add your own custom events directly to the calendar. Custom events are highlighted in **Green**, while Fridays and national holidays are marked in **Red**.
-* ** Automated Holiday Scraper:** Built-in `HtmlAgilityPack` scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
-* ** Persistent Storage:** Utilizes SQLite with Docker volume mapping to ensure your custom events are never lost between server restarts.
-* ** Responsive Design:** A custom CSS grid layout that looks perfect on desktop monitors, tablets, and mobile devices.
-* ** Docker Native:** Pre-configured `Dockerfile` and `compose.yml` for instant zero-config deployments on any Linux VPS or server management panel (like Dockhand).
+* **Native Persian Dates:** Accurate Shamsi date calculations and leap year support.
+* **Custom Event Management:** Add your own custom events directly to the calendar. Custom events are highlighted in **Green**, while Fridays and national holidays are marked in **Red**.
+* **Automated Holiday Scraper:** Built-in `HtmlAgilityPack` scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
+* **Persistent Storage:** Utilizes SQLite with Docker volume mapping to ensure your custom events are never lost between server restarts.
+* **Responsive Design:** A custom CSS grid layout that looks perfect on desktop monitors, tablets, and mobile devices.
+* **Docker Native:** Pre-configured `Dockerfile` and `compose.yml` for instant zero-config deployments on any Linux VPS or server management panel (like Dockhand).
+
+---
+
+##  Application Previews
+
+### Viewing Events
+![Event Popup](Docker-Shamsi-Calendar/assets/popup.png)
+
+### Adding Custom Events
+![Adding an Event](Docker-Shamsi-Calendar/assets/add.png)
+
+### Event Highlights
+![Event Highlights](Docker-Shamsi-Calendar/assets/event.png)
+---
 
 ##  Tech Stack
 
