@@ -1,6 +1,5 @@
 ﻿const monthNames = ["", "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
 const weekDays = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه"];
-
 let currentYear;
 let currentMonth;
 let currentDay;
@@ -99,14 +98,14 @@ async function render() {
             const tag = document.createElement('div');
             tag.className = 'event-tag';
 
-            // Custom events become green, holidays/Fridays become red
             if (e.isCustom) {
                 tag.classList.add('custom');
             } else if (e.isHoliday || isFriday) {
                 tag.classList.add('holiday');
             }
 
-            tag.textContent = e.title;
+            // Visually distinguish permanent events
+            tag.textContent = e.isPermanent ? `🎂 ${e.title}` : e.title;
             tag.title = e.title;
             cell.appendChild(tag);
         });
@@ -168,7 +167,8 @@ function openModal(day, isFriday) {
             }
 
             const eventText = document.createElement('span');
-            eventText.textContent = e.title;
+            // Check if it's permanent and add emoji
+            eventText.textContent = e.isPermanent ? `🎂 ${e.title}` : e.title;
             li.appendChild(eventText);
 
             if (e.isCustom) {
@@ -201,6 +201,11 @@ function openModal(day, isFriday) {
     }
 
     document.getElementById('eventInput').value = '';
+
+    // Ensure the checkbox exists and reset it when opening the modal
+    const checkbox = document.getElementById('isPermanentEvent');
+    if (checkbox) checkbox.checked = false;
+
     document.getElementById('eventModal').classList.add('active');
     setTimeout(() => document.getElementById('eventInput').focus(), 50);
 }
@@ -213,6 +218,10 @@ async function submitEvent() {
     const title = document.getElementById('eventInput').value.trim();
     if (!title) return;
 
+    // Grab the checkbox state (default to false if element is missing)
+    const checkbox = document.getElementById('isPermanentEvent');
+    const isPermanent = checkbox ? checkbox.checked : false;
+
     await fetch('/api/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -221,7 +230,8 @@ async function submitEvent() {
             year: currentYear,
             month: currentMonth,
             day: selectedDay,
-            isHoliday: false
+            isHoliday: false,
+            isPermanent: isPermanent // Send new flag to C# backend
         })
     });
 
