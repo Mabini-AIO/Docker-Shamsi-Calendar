@@ -65,12 +65,20 @@ namespace Docker_Shamsi_Calendar.Endpoints
                         }
                         else
                         {
-                            // Standard national holidays remain All-Day and transparent
-                            sb.Append($"DTSTART;VALUE=DATE:{evt.GregorianDate:yyyyMMdd}\r\nDTEND;VALUE=DATE:{evt.GregorianDate.AddDays(1):yyyyMMdd}\r\n");
-                            sb.Append($"SUMMARY:{evt.Title}\r\nTRANSP:{transp}\r\n");
-                        }
+                            sb.Append($"BEGIN:VEVENT\r\nUID:event-{evt.Id}@shamsi.local\r\nDTSTAMP:{DateTime.UtcNow:yyyyMMddTHHmmssZ}\r\n");
 
-                        sb.Append("END:VEVENT\r\n");
+                            // Apply the 9 AM - 11:59 PM timed format to ALL events, including holidays
+                            sb.Append($"DTSTART:{evt.GregorianDate:yyyyMMdd}T090000\r\nDTEND:{evt.GregorianDate:yyyyMMdd}T235959\r\n");
+                            sb.Append($"SUMMARY:{evt.Title}\r\nTRANSP:{transp}\r\n");
+
+                            // Attach push notifications ONLY to your personal events, not national holidays
+                            if (evt.IsCustom)
+                            {
+                                sb.Append(alarm);
+                            }
+
+                            sb.Append("END:VEVENT\r\n");
+                        }
                     }
                 }
 
