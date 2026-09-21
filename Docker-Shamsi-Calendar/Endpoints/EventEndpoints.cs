@@ -36,22 +36,35 @@ namespace Docker_Shamsi_Calendar.Endpoints
 
                 foreach (var evt in db.GetEventsForIcs())
                 {
+                    // Make custom events/birthdays show on lock screen (OPAQUE), keep official holidays hidden from busy time (TRANSPARENT)
+                    string transp = evt.IsHoliday && !evt.IsCustom ? "TRANSPARENT" : "OPAQUE";
+
+                    // Create an alarm that triggers 9 hours after midnight (9:00 AM on the day of the event)
+                    string alarm = "BEGIN:VALARM\r\nTRIGGER:PT9H\r\nACTION:DISPLAY\r\nDESCRIPTION:Reminder\r\nEND:VALARM\r\n";
+
                     if (evt.IsPermanent)
                     {
-                        // Project permanent events correctly across the 3-year sync window to avoid leap year drift
                         for (int y = currentYear - 1; y <= currentYear + 1; y++)
                         {
                             DateTime exactDate = pc.ToDateTime(y, evt.Month, evt.Day, 0, 0, 0, 0);
                             sb.Append($"BEGIN:VEVENT\r\nUID:event-{evt.Id}-{y}@shamsi.local\r\nDTSTAMP:{DateTime.UtcNow:yyyyMMddTHHmmssZ}\r\n");
                             sb.Append($"DTSTART;VALUE=DATE:{exactDate:yyyyMMdd}\r\nDTEND;VALUE=DATE:{exactDate.AddDays(1):yyyyMMdd}\r\n");
-                            sb.Append($"SUMMARY:🎂 {evt.Title}\r\nTRANSP:TRANSPARENT\r\nEND:VEVENT\r\n");
+                            sb.Append($"SUMMARY:🎂 {evt.Title}\r\nTRANSP:{transp}\r\n{alarm}END:VEVENT\r\n");
                         }
                     }
                     else
                     {
                         sb.Append($"BEGIN:VEVENT\r\nUID:event-{evt.Id}@shamsi.local\r\nDTSTAMP:{DateTime.UtcNow:yyyyMMddTHHmmssZ}\r\n");
                         sb.Append($"DTSTART;VALUE=DATE:{evt.GregorianDate:yyyyMMdd}\r\nDTEND;VALUE=DATE:{evt.GregorianDate.AddDays(1):yyyyMMdd}\r\n");
-                        sb.Append($"SUMMARY:{evt.Title}\r\nTRANSP:TRANSPARENT\r\nEND:VEVENT\r\n");
+                        sb.Append($"SUMMARY:{evt.Title}\r\nTRANSP:{transp}\r\n");
+
+                        // Only attach the 9:00 AM push notification to your personal events, not every national holiday
+                        if (evt.IsCustom || evt.IsPermanent)
+                        {
+                            sb.Append(alarm);
+                        }
+
+                        sb.Append("END:VEVENT\r\n");
                     }
                 }
 
