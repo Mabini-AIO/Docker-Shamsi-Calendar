@@ -38,8 +38,8 @@ namespace Docker_Shamsi_Calendar.Endpoints
                 {
                     string transp = evt.IsHoliday && !evt.IsCustom ? "TRANSPARENT" : "OPAQUE";
 
-                    // Alarm triggers at the exact time of the event (9:00 AM)
-                    string alarm = "BEGIN:VALARM\r\nTRIGGER:PT0M\r\nACTION:DISPLAY\r\nDESCRIPTION:Reminder\r\nEND:VALARM\r\n";
+                    // For all-day events, PT9H triggers exactly 9 hours after midnight (9:00 AM)
+                    string alarm = "BEGIN:VALARM\r\nTRIGGER:PT9H\r\nACTION:DISPLAY\r\nDESCRIPTION:Reminder\r\nEND:VALARM\r\n";
 
                     if (evt.IsPermanent)
                     {
@@ -47,18 +47,21 @@ namespace Docker_Shamsi_Calendar.Endpoints
                         {
                             DateTime exactDate = pc.ToDateTime(y, evt.Month, evt.Day, 0, 0, 0, 0);
                             sb.Append($"BEGIN:VEVENT\r\nUID:event-{evt.Id}-{y}@shamsi.local\r\nDTSTAMP:{DateTime.UtcNow:yyyyMMddTHHmmssZ}\r\n");
-                            sb.Append($"DTSTART:{exactDate:yyyyMMdd}T090000\r\nDTEND:{exactDate:yyyyMMdd}T235959\r\n");
+
+                            // True All-Day Event Format
+                            sb.Append($"DTSTART;VALUE=DATE:{exactDate:yyyyMMdd}\r\nDTEND;VALUE=DATE:{exactDate.AddDays(1):yyyyMMdd}\r\n");
                             sb.Append($"SUMMARY:🎂 {evt.Title}\r\nTRANSP:{transp}\r\n{alarm}END:VEVENT\r\n");
                         }
                     }
                     else
                     {
-                        // Clean, unified block for ALL non-permanent events
                         sb.Append($"BEGIN:VEVENT\r\nUID:event-{evt.Id}@shamsi.local\r\nDTSTAMP:{DateTime.UtcNow:yyyyMMddTHHmmssZ}\r\n");
-                        sb.Append($"DTSTART:{evt.GregorianDate:yyyyMMdd}T090000\r\nDTEND:{evt.GregorianDate:yyyyMMdd}T235959\r\n");
+
+                        // True All-Day Event Format for all other events
+                        sb.Append($"DTSTART;VALUE=DATE:{evt.GregorianDate:yyyyMMdd}\r\nDTEND;VALUE=DATE:{evt.GregorianDate.AddDays(1):yyyyMMdd}\r\n");
                         sb.Append($"SUMMARY:{evt.Title}\r\nTRANSP:{transp}\r\n");
 
-                        // Attach push notifications ONLY to your personal events, not national holidays
+                        // Attach push notifications ONLY to your personal events
                         if (evt.IsCustom)
                         {
                             sb.Append(alarm);
