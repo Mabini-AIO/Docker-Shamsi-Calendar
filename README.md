@@ -93,7 +93,7 @@ This project is configured to run on port 8574 out of the box.
     Clone the repository on your server:
     Bash
 
-    git clone [https://github.com/YourUsername/Docker-Shamsi-Calendar.git](https://github.com/YourUsername/Docker-Shamsi-Calendar.git)
+    git clone [https://github.com/Mabini-AIO/Docker-Shamsi-Calendar.git](https://github.com/Mabini-AIO/Docker-Shamsi-Calendar.git)
     cd Docker-Shamsi-Calendar
 
     Build and run the container in the background:
