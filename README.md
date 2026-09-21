@@ -14,23 +14,44 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 
 * **Native Persian Dates:** Accurate Shamsi date calculations and leap year support.
 * **Custom Event Management:** Add your own custom events directly to the calendar. Custom events are highlighted in **Green**, while Fridays and national holidays are marked in **Red**.
-* **Automated Holiday Scraper:** Built-in `HtmlAgilityPack` scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
+* **Native Mobile Sync (ICS):** Subscribe to your calendar feed directly from your iPhone (Apple Calendar) or any other standard calendar app.
+* **Built-in `HtmlAgilityPack`** scraper fetches official holidays directly from *time.ir* (fully supporting historical month names like "امرداد").
 * **Persistent Storage:** Utilizes SQLite with Docker volume mapping to ensure your custom events are never lost between server restarts.
 * **Responsive Design:** A custom CSS grid layout that looks perfect on desktop monitors, tablets, and mobile devices.
 * **Docker Native:** Pre-configured `Dockerfile` and `compose.yml` for instant zero-config deployments on any Linux VPS or server management panel (like Dockhand).
 
 ---
 
-##  Application Previews
+##  Syncing with Your Phone
 
-### Viewing Events
-![Event Popup](Docker-Shamsi-Calendar/assets/popup.png)
+You can view all your custom events and holidays directly inside your native Apple Calendar or Google Calendar app. The server generates a live `.ics` feed that updates automatically.
+
+**For iPhone (Apple Calendar):**
+1. Open your iPhone **Settings**.
+2. Tap **Calendar** > **Accounts** > **Add Account**.
+3. Tap **Other**, then select **Add Subscribed Calendar**.
+4. In the Server box, enter your live server URL: 
+   `http://YOUR_SERVER_IP:8574/calendar.ics`
+5. Tap **Next** and **Save**. 
+
+*(Note: If prompted about SSL, tap **Yes** to continue without SSL).*
+
+---
+
+##  Application Previews
 
 ### Adding Custom Events
 ![Adding an Event](Docker-Shamsi-Calendar/assets/add.png)
 
+### Phone View
+<img src="./Docker-Shamsi-Calendar/assets/phone.PNG" alt="Phone" width="40%" />
+
+### Viewing Events
+![Event Popup](Docker-Shamsi-Calendar/assets/popup.png)
+
 ### Event Highlights
 ![Event Highlights](Docker-Shamsi-Calendar/assets/event.png)
+
 ---
 
 ##  Tech Stack
@@ -38,7 +59,7 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 **Backend:**
 * C# / .NET 10.0
 * ASP.NET Core Minimal APIs
-* Entity Framework Core (SQLite)
+* SQLite via Microsoft.Data.Sqlite
 * HtmlAgilityPack (Web Scraping)
 
 **Frontend:**
@@ -57,7 +78,7 @@ A fast, lightweight, and modern Persian (Shamsi) Calendar application built with
 ### Local Development (Visual Studio)
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/YourUsername/Docker-Shamsi-Calendar.git](https://github.com/YourUsername/Docker-Shamsi-Calendar.git)
+   git clone [https://github.com/Mabini-AIO/Docker-Shamsi-Calendar.git](https://github.com/Mabini-AIO/Docker-Shamsi-Calendar.git)
 
     Open Docker-Shamsi-Calendar.sln in Visual Studio.
 
@@ -72,7 +93,7 @@ This project is configured to run on port 8574 out of the box.
     Clone the repository on your server:
     Bash
 
-    git clone [https://github.com/YourUsername/Docker-Shamsi-Calendar.git](https://github.com/YourUsername/Docker-Shamsi-Calendar.git)
+    git clone [https://github.com/Mabini-AIO/Docker-Shamsi-Calendar.git](https://github.com/Mabini-AIO/Docker-Shamsi-Calendar.git)
     cd Docker-Shamsi-Calendar
 
     Build and run the container in the background:
@@ -82,6 +103,8 @@ This project is configured to run on port 8574 out of the box.
 
     Access your calendar at http://YOUR_SERVER_IP:8574.
 
+ Architecture
+![uml](Docker-Shamsi-Calendar/assets/uml.png)
  Project Structure
 
     /wwwroot/ - Contains all frontend assets (index.html, /css/style.css, /js/app.js, /fonts/).
@@ -90,9 +113,10 @@ This project is configured to run on port 8574 out of the box.
 
     /Services/ - Background workers and the time.ir scraper logic.
 
-    Program.cs - Minimal API endpoints and database configuration.
+    /Endpoints/ - Clean routing definitions for REST logic and ICS feeds.
+
+    Program.cs - Core web application builder and service registration.
 
     Dockerfile - Multi-stage build instructions for compiling the .NET app.
 
     compose.yml - Docker stack configuration including volume mapping for the SQLite database.
-
